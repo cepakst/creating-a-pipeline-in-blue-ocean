@@ -9,6 +9,11 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        sh '''if [[ "$GIT_BRANCH" = origin/tags/* ]]; then
+    export VERSIONING_GIT_TAG=${GIT_BRANCH#origin/tags/};
+else 
+    export VERSIONING_GIT_BRANCH=${GIT_BRANCH#origin/};
+fi'''
         sh 'npm install'
       }
     }
